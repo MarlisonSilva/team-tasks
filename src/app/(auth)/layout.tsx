@@ -1,4 +1,5 @@
 import { Metadata } from "next"
+import "./styles.css"
 
 export const metadata: Metadata = {
   title: {
@@ -7,14 +8,21 @@ export const metadata: Metadata = {
   },
 }
 
-export default function MainLayout({
+export default function AuthLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
     <html lang="pt-br">
-      <body>{children}</body>
+      <body>
+        {children}
+        <footer>
+          <div>
+            <h2>Auth</h2>
+          </div>
+        </footer>
+      </body>
     </html>
   )
 }
