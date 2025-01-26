@@ -24,30 +24,30 @@ const seedProjects = async () => {
 seedProjects();
 
 export async function getProjects() {
-    return prisma.project.findMany();
+    return await prisma.project.findMany();
 }
 
 export async function getProjectById(id: number) {
-    return prisma.project.findUnique({
+    return await prisma.project.findUnique({
         where: { id },
     });
 }
 
 export async function createProject(data: { name: string; description: string; createdById: number }) {
-    return prisma.project.create({
+    return await prisma.project.create({
         data,
     });
 }
 
 export async function updateProject(id: number, data: { name: string; description: string }) {
-    return prisma.project.update({
+    return await prisma.project.update({
         where: { id },
         data,
     });
 }
 
 export async function deleteProject(id: number) {
-    return prisma.project.delete({
+    return await prisma.project.delete({
         where: { id },
     });
 }

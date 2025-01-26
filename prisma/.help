@@ -1,0 +1,8 @@
+Istalando Prisma:
+npm install prisma -D
+
+Iniciando Prisma com sqlite:
+npx prisma init --datasource-provider sqlite
+
+Migrate com Prisma: 
+npx prisma migrate dev --name init

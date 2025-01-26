@@ -9,3 +9,43 @@ datasource db {
   provider = "sqlite"
   url      = "file:app.db"
 }
+
+model User {
+  id       Int      @id @default(autoincrement())
+  name     String
+  email    String   @unique
+  password String
+  projects Project[]
+  tasks    Task[]
+  comments Comment[]
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  createdById Int
+  createdBy   User     @relation(fields: [createdById], references: [id])
+  tasks       Task[]
+}
+
+model Task {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String
+  status      String    @default("pending") // Valores: "pending", "in_progress", "completed"
+  projectId   Int
+  project     Project   @relation(fields: [projectId], references: [id])
+  assignedToId Int?
+  assignedTo  User?     @relation(fields: [assignedToId], references: [id])
+  comments    Comment[]
+}
+
+model Comment {
+  id       Int    @id @default(autoincrement())
+  text     String
+  taskId   Int
+  task     Task   @relation(fields: [taskId], references: [id])
+  authorId Int
+  author   User   @relation(fields: [authorId], references: [id])
+}
