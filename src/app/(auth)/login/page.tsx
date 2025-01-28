@@ -36,6 +36,7 @@ export default function Login() {
 
             if (response.ok) {
                 // Armazena o token em um cookie usando js-cookie
+                localStorage.setItem('token', data.token);
                 Cookies.set('token', data.token, { expires: 1, path: '/' });
                 setSuccess('Login bem-sucedido!');
                 router.push('/'); // Redireciona para a página inicial

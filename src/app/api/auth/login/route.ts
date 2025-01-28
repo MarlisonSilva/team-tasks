@@ -1,9 +1,7 @@
 import bcrypt from 'bcrypt';
-import { PrismaClient } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
-
-const prisma = new PrismaClient();
+import { getUserByEmail } from '@/app/prisma-db';
 
 export async function POST(req: NextRequest) {
     const { email, password } = await req.json();
@@ -14,7 +12,7 @@ export async function POST(req: NextRequest) {
 
     try {
         // Verifica se o usuário existe
-        const user = await prisma.user.findUnique({ where: { email } });
+        const user = await getUserByEmail(email);
         if (!user) {
             return NextResponse.json({ error: 'Usuário não encontrado' }, { status: 400 });
         }

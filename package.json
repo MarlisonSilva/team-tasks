@@ -11,12 +11,15 @@
   "dependencies": {
     "@prisma/client": "^6.2.1",
     "bcrypt": "^5.1.1",
+    "flatpickr": "^4.6.13",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
+    "jsvectormap": "^1.6.0",
     "next": "15.1.6",
     "next-auth": "^4.24.11",
     "nodemailer": "^6.10.0",
     "react": "^19.0.0",
+    "react-apexcharts": "^1.7.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {

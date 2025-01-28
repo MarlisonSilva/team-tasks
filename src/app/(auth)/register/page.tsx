@@ -1,5 +1,7 @@
 "use client";
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 
 export default function Register() {
     const [formData, setFormData] = useState({
@@ -10,6 +12,7 @@ export default function Register() {
 
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const router = useRouter();
 
     const handleChange = (e: { target: { name: any; value: any; }; }) => {
         const { name, value } = e.target;
@@ -35,7 +38,9 @@ export default function Register() {
             if (response.ok) {
                 // Armazena o token no localStorage
                 localStorage.setItem('token', data.token);
+                Cookies.set('token', data.token, { expires: 1, path: '/' });
                 setSuccess('Registro concluído com sucesso!');
+                router.push('/'); // Redireciona para a página inicial
             } else {
                 setError(data.error);
             }

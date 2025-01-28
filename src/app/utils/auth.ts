@@ -31,28 +31,30 @@ export async function verifyToken(token: string, secret: string) {
     return JSON.parse(atob(payload));
 }
 
-// export const getTokenData = async (req: NextRequest) => {
-//     const token = req.cookies.get('token')?.value || null;
-//     if (!token) {
-//         return null;
-//     }
+// server-side
+export const getTokenDataServer = async (req: NextRequest) => {
+    const token = req.cookies.get('token')?.value || null;
+    if (!token) {
+        return null;
+    }
 
-//     try {
-//         const secret = process.env.JWT_SECRET;
-//         if (!secret) {
-//             console.error('JWT secret is not definido');
-//             return null;
-//         }
+    try {
+        const secret = process.env.JWT_SECRET;
+        if (!secret) {
+            console.error('JWT secret is not definido');
+            return null;
+        }
 
-//         const decoded = await verifyToken(token, secret);
-//         return decoded;
-//     } catch (error) {
-//       console.error('Token inválido:', error);
-//       return null;
-//     }
-// }
+        const decoded = await verifyToken(token, secret);
+        return decoded;
+    } catch (error) {
+      console.error('Token inválido:', error);
+      return null;
+    }
+}
 
-export const getTokenTest = () => {
+// cliente-side
+export const getTokenDataClient = () => {
     if (typeof window === 'undefined') return null; // Garante que o código roda apenas no lado do cliente
 
     const token = localStorage.getItem('token');
