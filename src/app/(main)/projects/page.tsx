@@ -18,7 +18,7 @@ export default function ProjectList() {
                 },
                 body: JSON.stringify({}),
             });
-            
+
             const jsonRes = await responseMyProjects.json();
             console.log(jsonRes);
             setMyProjects(jsonRes.projects);
@@ -27,14 +27,19 @@ export default function ProjectList() {
     }, []);
     if (myProjects == null || myProjects.length == 0) {
         return (<>
-            <h1>Projetos</h1>
-            <Link type="button" href={`/projects/c`}
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 my-4 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-            >
-                Novo Projeto
-            </Link>
-
-            <p>Nenhum projeto encontrado</p>
+            <div>
+                <Breadcrumb pageName="Projetos" />
+                <div className="flex flex-col">
+                    <div className="flex justify-center">
+                        <Link type="button" href={`/projects/c`}
+                            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-3 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 my-3"
+                        >
+                            Novo Projeto
+                        </Link>
+                    </div>
+                    <p>NENHUM PROJETO ENCONTRADO</p>
+                </div>
+            </div>
         </>);
 
     }
