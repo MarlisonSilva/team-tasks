@@ -1,27 +1,37 @@
 "use client";
 import { getTokenDataClient } from '@/app/utils/auth';
-import Link from 'next/link';
+import { User } from '@/app/prisma-db';
 import { NextRequest } from 'next/server';
 import Image from 'next/image';
 import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
-
-interface User {
-    id: number,
-    email: string,
-    iat: number,
-    exp: number
-}
-
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function Profile(req: NextRequest) {
     const [user, setUser] = useState<User | null>(null);
+    const route = useRouter();
 
     useEffect(() => {
         async function fetchUserData() {
-            console.log("get token data");
-            const userData: User | null = await getTokenDataClient();
-            setUser(userData);
+            try {
+
+                const responseUser = await fetch('/api/user/get/by_me/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({}),
+                });
+
+                const data = await responseUser.json();
+                if (responseUser.ok) {
+                    setUser(data.user);
+                } else {
+                    route.push('/');
+                }
+            } catch (error) {
+                console.log(error);
+            }
         }
         fetchUserData();
     }, []);
@@ -131,31 +141,33 @@ export default function Profile(req: NextRequest) {
                         </div>
                         <div className="mt-4">
                             <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
-                                {user?.email || 'Usuário'}
+                                {user?.name || 'Usuário'}
                             </h3>
-                            <p className="font-medium">Ui/Ux Designer</p>
-                            <div className="mx-auto mb-5.5 mt-4.5 grid max-w-94 grid-cols-3 rounded-md border border-stroke py-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F]">
+                            <h4 className="mb-1.5 text-base text-black dark:text-white">
+                                {user?.email || 'E-mail'}
+                            </h4>
+                            {/* <div className="mx-auto mb-5.5 mt-4.5 grid max-w-94 grid-cols-3 rounded-md border border-stroke py-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F]">
                                 <div className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
                                     <span className="font-semibold text-black dark:text-white">
                                         259
                                     </span>
-                                    <span className="text-sm">Posts</span>
+                                    <span className="text-sm">Projetos</span>
                                 </div>
                                 <div className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
                                     <span className="font-semibold text-black dark:text-white">
-                                        129K
+                                        150
                                     </span>
-                                    <span className="text-sm">Followers</span>
+                                    <span className="text-sm">Tarefas</span>
                                 </div>
                                 <div className="flex flex-col items-center justify-center gap-1 px-4 xsm:flex-row">
                                     <span className="font-semibold text-black dark:text-white">
-                                        2K
+                                        200
                                     </span>
-                                    <span className="text-sm">Following</span>
+                                    <span className="text-sm">Comentários</span>
                                 </div>
-                            </div>
+                            </div> */}
 
-                            <div className="mx-auto max-w-180">
+                            {/* <div className="mx-auto max-w-180">
                                 <h4 className="font-semibold text-black dark:text-white">
                                     About Me
                                 </h4>
@@ -166,9 +178,9 @@ export default function Profile(req: NextRequest) {
                                     dapibus ultricies. Sed vel aliquet libero. Nunc a augue
                                     fermentum, pharetra ligula sed, aliquam lacus.
                                 </p>
-                            </div>
+                            </div> */}
 
-                            <div className="mt-6.5">
+                            {/* <div className="mt-6.5">
                                 <h4 className="mb-3.5 font-medium text-black dark:text-white">
                                     Follow me on
                                 </h4>
@@ -319,7 +331,7 @@ export default function Profile(req: NextRequest) {
                                         </svg>
                                     </Link>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
