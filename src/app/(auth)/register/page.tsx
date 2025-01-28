@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
+import Link from 'next/link';
 
 export default function Register() {
     const [formData, setFormData] = useState({
@@ -107,10 +108,13 @@ export default function Register() {
 
                 <button
                     type="submit"
-                    className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
+                    className="text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:focus:ring-blue-800 shadow-md transform hover:scale-105 transition-all"
                 >
                     Registrar
                 </button>
+
+                <p className='mt-3'>Já possui uma conta? <Link className="font-semibold text-blue-700 dark:text-blue-400" href={'/login'}>Entre</Link></p>
+
             </form>
         </div>
     );
